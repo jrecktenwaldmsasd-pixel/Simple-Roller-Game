@@ -95,10 +95,10 @@ Draw.spike = function (x, y, size) {
   ctx.fill();
 };
 
-// The finish: a white pole with a flag on it.
+// The finish: a green pole with a flag on it.
 Draw.finish = function (x, y, size) {
   var ctx = Draw.ctx;
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#117400";
   ctx.fillRect(x + size / 2 - 2, y, 4, size);
   ctx.beginPath();
   ctx.moveTo(x + size / 2 + 2, y + 4);
