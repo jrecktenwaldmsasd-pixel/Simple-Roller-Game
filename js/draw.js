@@ -34,7 +34,7 @@ Draw.updateCamera = function () {
 Draw.everything = function () {
   var ctx = Draw.ctx;
 
-  // 1. wipe the screen white
+  // 1. wipe the screen black
   ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
 
@@ -70,7 +70,7 @@ Draw.world = function () {
   }
 };
 
-// A solid block: white inside, black outline.
+// A solid block: black inside, white outline.
 Draw.block = function (x, y, size) {
   var ctx = Draw.ctx;
   ctx.fillStyle = "#000000";
@@ -83,10 +83,10 @@ Draw.block = function (x, y, size) {
                  size - CONFIG.LINE_WIDTH);
 };
 
-// A spike: a solid black triangle pointing up.
+// A spike: a solid red triangle pointing up.
 Draw.spike = function (x, y, size) {
   var ctx = Draw.ctx;
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#950000";
   ctx.beginPath();
   ctx.moveTo(x, y + size);
   ctx.lineTo(x + size / 2, y);
@@ -95,7 +95,7 @@ Draw.spike = function (x, y, size) {
   ctx.fill();
 };
 
-// The finish: a black pole with a flag on it.
+// The finish: a white pole with a flag on it.
 Draw.finish = function (x, y, size) {
   var ctx = Draw.ctx;
   ctx.fillStyle = "#ffffff";
@@ -108,8 +108,8 @@ Draw.finish = function (x, y, size) {
   ctx.fill();
 };
 
-// The player: a white circle with a black outline and one off-center
-// black dot, so you can see it roll.
+// The player: a black circle with a white outline and one off-center
+// white dot, so you can see it roll.
 Draw.player = function () {
   var ctx = Draw.ctx;
   var r = CONFIG.PLAYER_RADIUS;
