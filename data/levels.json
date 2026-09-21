@@ -11,6 +11,7 @@
         "flat",
         "spikes",
         "platform",
+        "crumble",
         "stairs",
         "finish"
       ]
@@ -26,6 +27,7 @@
         "platform",
         "gap",
         "flat",
+        "crumble",
         "finish"
       ]
     }
