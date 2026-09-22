@@ -48,3 +48,18 @@ h1 {
   83%  { color: violet; }  
   100% { color: red; }  
 }  
+
+/* the paragraphs cycles through the rainbow */  
+p {  
+  animation: rainbow 4s linear infinite;  
+}  
+  
+@keyframes rainbow {  
+  0%   { color: red; }  
+  17%  { color: orange; }  
+  33%  { color: yellow; }  
+  50%  { color: green; }  
+  67%  { color: blue; }  
+  83%  { color: violet; }  
+  100% { color: red; }  
+}  
