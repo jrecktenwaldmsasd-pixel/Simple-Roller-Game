@@ -48,12 +48,17 @@ Game.update = function () {
     return;
   }
 
-  if (Player.hasWon()) {
-    Game.mode = "won";
-    Game.showMessage("You made it. Press R to play again.");
-    return;
-  }
-};
+    if (Player.hasWon()) {  
+    // is there another level after this one?  
+    if (Game.levelNumber + 1 < Level.levels.length) {  
+      Game.startLevel(Game.levelNumber + 1); // load the next level  
+    } else {  
+      Game.mode = "won"; // that was the last level  
+      Game.showMessage("You beat every level. Press R to start over.");  
+    }  
+    return;  
+  }  
+}
 
 // --- THE LOOP ITSELF --------------------------------------------------
 Game.loop = function () {

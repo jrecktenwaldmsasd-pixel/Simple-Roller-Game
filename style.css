@@ -49,7 +49,7 @@ h1 {
   100% { color: red; }  
 }  
 
-/* the paragraphs cycles through the rainbow */  
+/* the paragraphs cycle through the rainbow */  
 p {  
   animation: rainbow 4s linear infinite;  
 }  
