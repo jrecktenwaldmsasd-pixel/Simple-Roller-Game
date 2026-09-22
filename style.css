@@ -33,3 +33,18 @@ canvas {
 .controls {
   font-size: 13px;
 }
+
+/* the title cycles through the rainbow */  
+h1 {  
+  animation: rainbow 4s linear infinite;  
+}  
+  
+@keyframes rainbow {  
+  0%   { color: red; }  
+  17%  { color: orange; }  
+  33%  { color: yellow; }  
+  50%  { color: green; }  
+  67%  { color: blue; }  
+  83%  { color: violet; }  
+  100% { color: red; }  
+}  
