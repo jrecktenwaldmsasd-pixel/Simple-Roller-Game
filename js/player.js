@@ -14,6 +14,8 @@ var Player = {
   vy: 0,           // speed up and down
   onGround: false, // is the player standing on something right now?
   angle: 0         // how far the circle has rolled, for drawing the dot
+  trail: [] // remembers recent positions for the contrail  
+
 };
 
 // Put the player back at the level's S square.
@@ -28,6 +30,16 @@ Player.reset = function () {
 
 // Run one frame of player movement.
 Player.update = function () {
+// remember where we were, but only the last few spots  
+Player.recordTrail = function () {  
+  Player.trail.push({ x: Player.x, y: Player.y });  
+  if (Player.trail.length > CONFIG.TRAIL_LENGTH) {  
+    Player.trail.shift(); // forget the oldest position  
+  }  
+  Player.recordTrail();  
+
+};  
+
   var size = CONFIG.PLAYER_SIZE;
 
   // --- 1. decide how fast to go sideways ------------------------------

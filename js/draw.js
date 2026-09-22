@@ -84,10 +84,10 @@ Draw.block = function (x, y, size) {
                  size - CONFIG.LINE_WIDTH);
 };
 
-// A spike: a solid white triangle pointing up.
+// A spike: a solid red triangle pointing up.
 Draw.spike = function (x, y, size) {
   var ctx = Draw.ctx;
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#870000";
   ctx.beginPath();
   ctx.moveTo(x, y + size);
   ctx.lineTo(x + size / 2, y);
@@ -108,6 +108,21 @@ Draw.finish = function (x, y, size) {
   ctx.closePath();
   ctx.fill();
 };
+
+// draw the contrail first so it sits behind the player  
+ctx.fillStyle = "#000000";  
+for (var i = 0; i < Player.trail.length; i++) {  
+  var spot = Player.trail[i];  
+  var fade = i / Player.trail.length; // older spots are smaller  
+  ctx.globalAlpha = fade * 0.4; // see-through so it looks like a trail  
+  ctx.beginPath();  
+  ctx.arc(spot.x + CONFIG.PLAYER_SIZE / 2,  
+    spot.y + CONFIG.PLAYER_SIZE / 2,  
+    CONFIG.PLAYER_RADIUS * fade * 0.6, 0, Math.PI * 2);  
+  ctx.fill();  
+}  
+ctx.globalAlpha = 1; // back to full strength for the player  
+
 
 // The player: a balck circle with a white outline and one off-center
 // white dot, so you can see it roll.
