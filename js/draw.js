@@ -109,8 +109,16 @@ Draw.finish = function (x, y, size) {
   ctx.fill();
 };
 
-// draw the contrail first so it sits behind the player  
-ctx.fillStyle = "#000000";  
+
+
+
+// The player: a balck circle with a white outline and one off-center
+// white dot, so you can see it roll.
+Draw.player = function () {
+  var ctx = Draw.ctx;
+
+  // draw the contrail first so it sits behind the player  
+ctx.fillStyle = "#ff0000";  
 for (var i = 0; i < Player.trail.length; i++) {  
   var spot = Player.trail[i];  
   var fade = i / Player.trail.length; // older spots are smaller  
@@ -124,10 +132,6 @@ for (var i = 0; i < Player.trail.length; i++) {
 ctx.globalAlpha = 1; // back to full strength for the player  
 
 
-// The player: a balck circle with a white outline and one off-center
-// white dot, so you can see it roll.
-Draw.player = function () {
-  var ctx = Draw.ctx;
   var r = CONFIG.PLAYER_RADIUS;
   var centerX = Player.x + CONFIG.PLAYER_SIZE / 2;
   var centerY = Player.y + CONFIG.PLAYER_SIZE / 2;

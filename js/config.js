@@ -36,6 +36,8 @@ var CONFIG = {
   START_LEVEL: 0,      // which level in data/levels.json to load first
 
 CRUMBLE_SHAKE_FRAMES: 10, // about one second before it falls  
-CRUMBLE_RESPAWN_FRAMES: 180 // about three seconds before it returns  
+CRUMBLE_RESPAWN_FRAMES: 180, // about three seconds before it returns  
+
+TRAIL_LENGTH: 12 // how many past positions the contrail remembers  
 
 };
