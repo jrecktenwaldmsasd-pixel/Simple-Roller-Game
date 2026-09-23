@@ -118,7 +118,7 @@ Draw.player = function () {
   var ctx = Draw.ctx;
 
   // draw the contrail first so it sits behind the player  
-ctx.fillStyle = "#ff0000";  
+ctx.fillStyle = "#ffffff";  
 for (var i = 0; i < Player.trail.length; i++) {  
   var spot = Player.trail[i];  
   var fade = i / Player.trail.length; // older spots are smaller  

@@ -38,6 +38,6 @@ var CONFIG = {
 CRUMBLE_SHAKE_FRAMES: 10, // about one second before it falls  
 CRUMBLE_RESPAWN_FRAMES: 180, // about three seconds before it returns  
 
-TRAIL_LENGTH: 12 // how many past positions the contrail remembers  
+TRAIL_LENGTH: 50 // how many past positions the contrail remembers  
 
 };
