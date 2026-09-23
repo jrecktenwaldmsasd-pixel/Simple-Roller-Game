@@ -30,6 +30,25 @@ Draw.updateCamera = function () {
   if (Draw.cameraX > furthest) { Draw.cameraX = furthest; }
 };
 
+// a coin: a small yellow circle with a white ring  
+Coins.draw = function () {  
+  var ctx = Draw.ctx;  
+  var size = CONFIG.TILE;  
+  for (var row = 0; row < CONFIG.ROWS; row++) {  
+    for (var col = 0; col < Level.cols; col++) {  
+      if (Level.charAt(col, row) === "o") {  
+        ctx.strokeStyle = "#ffffff";  
+        ctx.fillStyle = "#decf00";  
+        ctx.lineWidth = 2;  
+        ctx.beginPath();  
+        ctx.arc(col * size + size / 2, row * size + size / 2, 8, 0, Math.PI * 2);  
+        ctx.fill();  
+        ctx.stroke();  
+      }  
+    }  
+  }  
+};  
+
 // Draw one whole frame.
 Draw.everything = function () {
   var ctx = Draw.ctx;
@@ -43,10 +62,16 @@ Draw.everything = function () {
   ctx.translate(-Draw.cameraX, 0);
 
   Draw.world();
+  Coins.draw();
   Crumble.draw();
   Draw.player();
 
   ctx.restore();
+  // the score, fixed on screen while the world scrolls  
+ctx.fillStyle = "#ffffff";  
+ctx.font = "20px monospace";  
+ctx.fillText("Coins: " + Coins.count, 10, 25);  
+
 };
 
 // Draw every grid square that is currently on screen.
