@@ -9,6 +9,8 @@
    ===================================================================== */
 
 Draw.setup();
+Draw.makeStars();  
+
 
 Level.loadData(function () {
   Game.startLevel(CONFIG.START_LEVEL);

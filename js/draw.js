@@ -9,16 +9,57 @@
    work in.
    ===================================================================== */
 
-var Draw = {
-  canvas: null,
-  ctx: null,
-  cameraX: 0     // how far the view has scrolled to the right
-};
+var Draw = {  
+  canvas: null,  
+  ctx: null,  
+  cameraX: 0,    // how far the view has scrolled to the right  
+  time: 0,       // counts every frame, for animating the background  
+  stars: []      // the galaxy's stars  
+};  
 
 Draw.setup = function () {
   Draw.canvas = document.getElementById("game");
   Draw.ctx = Draw.canvas.getContext("2d");
 };
+
+// make a field of stars at random positions, done once at startup  
+Draw.makeStars = function () {  
+  for (var i = 0; i < 60; i++) {  
+    Draw.stars.push({  
+      x: Math.random() * CONFIG.CANVAS_W,  
+      y: Math.random() * CONFIG.CANVAS_H,  
+      size: Math.random() * 2 + 1,   // between 1 and 3 pixels  
+      speed: Math.random() * 0.5 + 0.2 // each star drifts at its own speed  
+    });  
+  }  
+};  
+
+// the purple galaxy: a gradient sky with slowly drifting, twinkling stars  
+Draw.galaxy = function () {  
+  var ctx = Draw.ctx;  
+  
+  // the gradient sky, drawn over the whole screen  
+  var sky = ctx.createLinearGradient(0, 0, 0, CONFIG.CANVAS_H);  
+  sky.addColorStop(0, "#1a0533"); // dark purple at the top  
+  sky.addColorStop(1, "#4b0f6b"); // brighter purple at the bottom  
+  ctx.fillStyle = sky;  
+  ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);  
+  
+  // the stars, drifting slowly and twinkling  
+  ctx.fillStyle = "#ffffff";  
+  for (var i = 0; i < Draw.stars.length; i++) {  
+    var star = Draw.stars[i];  
+    var x = star.x - Draw.time * star.speed; // drift left over time  
+    if (x < 0) { x = x + CONFIG.CANVAS_W; }  // wrap around the edge  
+    var twinkle = 0.4 + 0.6 * Math.abs(Math.sin(Draw.time / 30 + i));  
+    ctx.globalAlpha = twinkle;  
+    ctx.beginPath();  
+    ctx.arc(x, star.y, star.size, 0, Math.PI * 2);  
+    ctx.fill();  
+  }  
+  ctx.globalAlpha = 1;  
+};  
+
 
 // Follow the player, but never scroll past the ends of the level.
 Draw.updateCamera = function () {
@@ -53,9 +94,11 @@ Coins.draw = function () {
 Draw.everything = function () {
   var ctx = Draw.ctx;
 
-  // 1. wipe the screen black
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
+Draw.time = Draw.time + 1; // one frame older, every frame  
+
+  // 1. paint the galaxy (this replaces the old black wipe)  
+Draw.galaxy();  
+
 
   // 2. shift everything left so the camera looks like it moved right
   ctx.save();
