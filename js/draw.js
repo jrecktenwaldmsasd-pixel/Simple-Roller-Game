@@ -34,7 +34,7 @@ Draw.makeStars = function () {
   }  
 };  
 
-// the purple galaxy: a gradient sky with slowly drifting, twinkling stars  
+  // the purple galaxy: a gradient sky with slowly drifting, twinkling stars  
 Draw.galaxy = function () {  
   var ctx = Draw.ctx;  
   
@@ -60,7 +60,41 @@ Draw.galaxy = function () {
   ctx.globalAlpha = 1;  
 };  
 
+// the moon rises and crosses the sky as you travel through the level  
+Draw.moon = function () {  
+  var ctx = Draw.ctx;  
+  
+  // how far through the level are we? 0 at the start, 1 at the end  
+  var progress = Player.x / Level.pixelWidth();  
+  if (progress > 1) { progress = 1; }  
+  
+  // the moon starts low on the left and arcs high to the right  
+  var moonX = 80 + progress * (CONFIG.CANVAS_W - 160);  
+  var moonY = 300 - Math.sin(progress * Math.PI) * 220;  
+  
+  // glow: a bigger, fainter circle behind the moon  
+  ctx.globalAlpha = 0.2;  
+  ctx.fillStyle = "#e8e0ff";  
+  ctx.beginPath();  
+  ctx.arc(moonX, moonY, 34, 0, Math.PI * 2);  
+  ctx.fill();  
+  ctx.globalAlpha = 1;  
+  
+  // the moon itself, with a couple of craters  
+  ctx.fillStyle = "#e8e0ff";  
+  ctx.beginPath();  
+  ctx.arc(moonX, moonY, 24, 0, Math.PI * 2);  
+  ctx.fill();  
+  ctx.fillStyle = "#b8a8e0";  
+  ctx.beginPath();  
+  ctx.arc(moonX - 8, moonY - 5, 6, 0, Math.PI * 2);  
+  ctx.fill();  
+  ctx.beginPath();  
+  ctx.arc(moonX + 7, moonY + 8, 4, 0, Math.PI * 2);  
+  ctx.fill();  
+};  
 
+  
 // Follow the player, but never scroll past the ends of the level.
 Draw.updateCamera = function () {
   Draw.cameraX = Player.x - CONFIG.CANVAS_W / 2;
@@ -99,6 +133,7 @@ Draw.time = Draw.time + 1; // one frame older, every frame
   // 1. paint the galaxy (this replaces the old black wipe)  
 Draw.galaxy();  
 
+Draw.moon(); // the moon rises with your progress  
 
   // 2. shift everything left so the camera looks like it moved right
   ctx.save();
