@@ -94,7 +94,49 @@ Draw.moon = function () {
   ctx.fill();  
 };  
 
+// light poles: a small pole with a glowing cone of light above it  
+Draw.lamps = function () {  
+  var ctx = Draw.ctx;  
+  var size = CONFIG.TILE;  
   
+  // the cones first, so the poles sit on top of them  
+  ctx.globalAlpha = 0.15;  
+  ctx.fillStyle = "#fff3c4"; // warm light color  
+  for (var row = 0; row < CONFIG.ROWS; row++) {  
+    for (var col = 0; col < Level.cols; col++) {  
+      if (Level.charAt(col, row) === "L") {  
+        // a triangle of light spreading upward from the lamp head  
+        var topX = col * size + size / 2;  
+        var topY = row * size - 8;  
+        ctx.beginPath();  
+        ctx.moveTo(topX, topY);  
+        ctx.lineTo(topX - 34, topY - 90);  
+        ctx.lineTo(topX + 34, topY - 90);  
+        ctx.closePath();  
+        ctx.fill();  
+      }  
+    }  
+  }  
+  ctx.globalAlpha = 1;  
+  
+  // the poles themselves: a dark post with a glowing bulb  
+  for (var r = 0; r < CONFIG.ROWS; r++) {  
+    for (var c = 0; c < Level.cols; c++) {  
+      if (Level.charAt(c, r) === "L") {  
+        var x = c * size + size / 2;  
+        var y = r * size;  
+        ctx.fillStyle = "#2a2140"; // dark post against the sky  
+        ctx.fillRect(x - 2, y - 34, 4, 34);  
+        ctx.fillStyle = "#fff3c4";  
+        ctx.beginPath();  
+        ctx.arc(x, y - 38, 6, 0, Math.PI * 2);  
+        ctx.fill();  
+      }  
+    }  
+  }  
+};  
+
+
 // Follow the player, but never scroll past the ends of the level.
 Draw.updateCamera = function () {
   Draw.cameraX = Player.x - CONFIG.CANVAS_W / 2;
@@ -142,6 +184,7 @@ Draw.moon(); // the moon rises with your progress
   Draw.world();
   Coins.draw();
   Crumble.draw();
+  Draw.lamps();
   Draw.player();
 
   ctx.restore();
