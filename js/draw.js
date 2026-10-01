@@ -113,6 +113,10 @@ Draw.lamps = function () {
         ctx.lineTo(bulbX - 40, row * size + size); // down-left to the ground  
         ctx.lineTo(bulbX + 40, row * size + size); // down-right to the ground  
         ctx.closePath();  
+        // a small cap arm on top, holding the bulb  
+        ctx.fillStyle = "#2a2140";  
+        ctx.fillRect(x - 10, y - 40, 20, 4); // horizontal bar over the bulb  
+        ctx.fillRect(x - 10, y - 40, 4, 8);  // tiny hook on the left end  
         ctx.fill();  
       }  
     }  
