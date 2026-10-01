@@ -126,7 +126,7 @@ Draw.lamps = function () {
         var x = c * size + size / 2;  
         var y = r * size;  
         ctx.fillStyle = "#2a2140"; // dark post against the sky  
-        ctx.fillRect(x - 2, y - 34, 4, 34);  
+        ctx.fillRect(x - 2, y - 34, 4, 74); // long enough to reach the ground tile  
         ctx.fillStyle = "#fff3c4";  
         ctx.beginPath();  
         ctx.arc(x, y - 38, 6, 0, Math.PI * 2);  
