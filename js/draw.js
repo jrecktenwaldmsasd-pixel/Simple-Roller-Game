@@ -110,12 +110,10 @@ Draw.lamps = function () {
         var bulbY = row * size - 38;  
         ctx.beginPath();  
         ctx.moveTo(bulbX, bulbY);  
-        ctx.lineTo(bulbX - 40, row * size + size); // down-left to the ground  
-        ctx.lineTo(bulbX + 40, row * size + size); // down-right to the ground  
+        ctx.lineTo(bulbX - 40, row * size + size);  
+        ctx.lineTo(bulbX + 40, row * size + size);  
         ctx.closePath();  
-        // a small cap arm on top, holding the bulb  
-        ctx.fillStyle = "#2a2140";  
-        ctx.fill();  
+        ctx.fill();   // <-- fills with the warm color set above the loop  
       }  
     }  
   }  
