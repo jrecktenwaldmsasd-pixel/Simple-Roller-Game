@@ -115,8 +115,6 @@ Draw.lamps = function () {
         ctx.closePath();  
         // a small cap arm on top, holding the bulb  
         ctx.fillStyle = "#2a2140";  
-        ctx.fillRect(x - 10, y - 40, 20, 4); // horizontal bar over the bulb  
-        ctx.fillRect(x - 10, y - 40, 4, 8);  // tiny hook on the left end  
         ctx.fill();  
       }  
     }  
@@ -136,6 +134,10 @@ Draw.lamps = function () {
         ctx.beginPath();  
         ctx.arc(x, y - 38, 6, 0, Math.PI * 2);  
         ctx.fill();  
+
+         // a small cap over the bulb, so it reads as a hooded streetlight  
+        ctx.fillStyle = "#2a2140";  
+        ctx.fillRect(x - 10, y - 42, 20, 4); // horizontal bar above the bulb  
       }  
     }  
   }  
