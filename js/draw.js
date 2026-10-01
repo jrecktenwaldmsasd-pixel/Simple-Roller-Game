@@ -99,25 +99,26 @@ Draw.lamps = function () {
   var ctx = Draw.ctx;  
   var size = CONFIG.TILE;  
   
-  // the cones first, so the poles sit on top of them  
+    // the cones first, so the poles sit on top of them  
   ctx.globalAlpha = 0.15;  
   ctx.fillStyle = "#fff3c4"; // warm light color  
   for (var row = 0; row < CONFIG.ROWS; row++) {  
     for (var col = 0; col < Level.cols; col++) {  
       if (Level.charAt(col, row) === "L") {  
-        // a triangle of light spreading upward from the lamp head  
-        var topX = col * size + size / 2;  
-        var topY = row * size - 8;  
+        // a cone of light spreading DOWN from the bulb to the ground  
+        var bulbX = col * size + size / 2;  
+        var bulbY = row * size - 38;  
         ctx.beginPath();  
-        ctx.moveTo(topX, topY);  
-        ctx.lineTo(topX - 34, topY - 90);  
-        ctx.lineTo(topX + 34, topY - 90);  
+        ctx.moveTo(bulbX, bulbY);  
+        ctx.lineTo(bulbX - 40, row * size + size); // down-left to the ground  
+        ctx.lineTo(bulbX + 40, row * size + size); // down-right to the ground  
         ctx.closePath();  
         ctx.fill();  
       }  
     }  
   }  
   ctx.globalAlpha = 1;  
+
   
   // the poles themselves: a dark post with a glowing bulb  
   for (var r = 0; r < CONFIG.ROWS; r++) {  
