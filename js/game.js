@@ -32,11 +32,14 @@ Game.showMessage = function (text) {
 // --- ONE FRAME --------------------------------------------------------
 Game.update = function () {
 
-  // R always restarts, no matter what mode we are in.
-  if (Input.restart) {
-    Game.startLevel(Game.levelNumber);
-    return;
-  }
+    if (Input.restart) {  
+    if (Game.mode === "won") {  
+      Game.startLevel(0);  // back to the very first level  
+    } else {  
+      Game.startLevel(Game.levelNumber);  // retry the current level  
+    }  
+    return;  
+  }  
 
   // If we are not playing, nothing moves. We just wait for R.
   if (Game.mode !== "playing") { return; }
