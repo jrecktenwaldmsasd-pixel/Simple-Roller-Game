@@ -26,6 +26,9 @@ Coins.update = function () {
       
             Coins.count = Coins.count + 1;  
       Coins.popTimer = CONFIG.COIN_POP_FRAMES; // highlight the counter  
+      // erase the coin tile from the grid — strings can't be edited in place  
+      var line = Level.grid[spot.row];  
+      Level.grid[spot.row] = line.substring(0, spot.col) + "." + line.substring(spot.col + 1);  
       // spawn a burst of particles at the coin's center  
       var cx = spot.col * CONFIG.TILE + CONFIG.TILE / 2;  
       var cy = spot.row * CONFIG.TILE + CONFIG.TILE / 2;  
