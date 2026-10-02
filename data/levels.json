@@ -68,6 +68,40 @@
         "lamps",
         "finish"
       ]
-    }
+    },
+
+    {"name": "Level 3 - Wall?",
+      "pieces": [
+        "start",
+        "coins",
+        "lamps",
+        "wall",
+        "coins",
+        "lamps",
+        "gap",
+        "coins",
+        "lamps",
+        "step",
+        "coins",
+        "lamps",
+        "spikepit",
+        "coins",
+        "lamps",
+        "coins",
+        "lamps",
+        "wall",
+        "coins",
+        "lamps",
+        "gap",
+        "coins",
+        "lamps",
+        "flat",
+        "coins",
+        "lamps",
+        "crumble",
+        "coins",
+        "lamps",
+        "finish"
+      ]}
   ]
 }
