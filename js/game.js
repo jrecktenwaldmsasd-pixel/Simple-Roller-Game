@@ -53,7 +53,9 @@ Game.update = function () {
   Player.update();
   Crumble.update();
   Trail.update();
-  Coins.update();
+  Coins.update();  
+  Coins.popsUpdate();  
+
 
   if (Player.isDead()) {
     Game.mode = "dead";

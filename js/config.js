@@ -43,6 +43,7 @@ TRAIL_LENGTH: 50, // how many past positions the contrail remembers
   WALL_JUMP_AWAY: 5,          // sideways push off a wall  
   WALL_JUMP_POWER: 15,        // upward push off a wall  
   WALL_JUMP_LOCK_FRAMES: 12,   // frames the launch overrides your steering  
-  TITLE_FRAMES: 180           // 180 frames = 3 seconds of title card  
+  TITLE_FRAMES: 180,           // 180 frames = 3 seconds of title card  
+  COIN_POP_FRAMES: 20         // frames a coin burst and counter pop last  
 
 };

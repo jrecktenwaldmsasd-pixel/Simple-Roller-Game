@@ -208,6 +208,7 @@ Draw.moon(); // the moon rises with your progress
 
   Draw.world();  
   Coins.draw();  
+  Coins.popsDraw();
   Crumble.draw();  
   Draw.lamps();  
   Trail.draw();  
@@ -217,11 +218,12 @@ Draw.moon(); // the moon rises with your progress
   
 Draw.titleCard(); // the level name, fixed on screen  
   
-  // the score, fixed on screen while the world scrolls  
+  // the score, fixed on screen; it pops bigger right after a coin  
+  var pop = 1 + 0.4 * (Coins.popTimer / CONFIG.COIN_POP_FRAMES);  
   ctx.fillStyle = "#ffffff";  
-  ctx.font = "20px monospace";  
+  ctx.font = Math.round(20 * pop) + "px monospace";  
   ctx.fillText("Coins: " + Coins.count, 10, 25);  
-};  
+
 
 // Draw every grid square that is currently on screen.
 Draw.world = function () {
