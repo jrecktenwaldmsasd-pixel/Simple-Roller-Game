@@ -1,20 +1,6 @@
 // =====================================================================  
 // coins.js -- collectible coins and the score counter  
 // =====================================================================  
-  
-// draw the burst particles, fading as they die  
-Coins.popsDraw = function () {  
-  var ctx = Draw.ctx;  
-  ctx.fillStyle = "#decf00";  
-  for (var i = 0; i < Coins.pops.length; i++) {  
-    var pop = Coins.pops[i];  
-    ctx.globalAlpha = pop.life / CONFIG.COIN_POP_FRAMES;  
-    ctx.beginPath();  
-    ctx.arc(pop.x, pop.y, 3, 0, Math.PI * 2);  
-    ctx.fill();  
-  }  
-  ctx.globalAlpha = 1;  
-};  
 
 var Coins = {  
   count: 0,    // how many coins the player has grabbed this level  

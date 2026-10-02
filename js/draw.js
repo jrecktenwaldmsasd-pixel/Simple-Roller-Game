@@ -119,7 +119,6 @@ Draw.lamps = function () {
   }  
   ctx.globalAlpha = 1;  
 
-  
   // the poles themselves: a dark post with a glowing bulb  
   for (var r = 0; r < CONFIG.ROWS; r++) {  
     for (var c = 0; c < Level.cols; c++) {  
@@ -140,7 +139,6 @@ Draw.lamps = function () {
     }  
   }  
 };  
-
 
 // Follow the player, but never scroll past the ends of the level.
 Draw.updateCamera = function () {
