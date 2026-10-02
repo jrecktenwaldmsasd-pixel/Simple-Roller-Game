@@ -152,6 +152,26 @@ Draw.updateCamera = function () {
   if (Draw.cameraX > furthest) { Draw.cameraX = furthest; }
 };
 
+// the level's name, rainbow-colored, at the top of the screen  
+Draw.titleCard = function () {  
+  var ctx = Draw.ctx;  
+  if (Game.titleTimer <= 0) { return; } // only while the timer is running  
+  
+  // fade out over the last half-second so it doesn't blink off  
+  var alpha = Game.titleTimer / 30;  
+  if (alpha > 1) { alpha = 1; }  
+  
+  // one hue for the whole word, but it drifts through the rainbow  
+  var hue = (Draw.time * 2) % 360;  
+  ctx.globalAlpha = alpha;  
+  ctx.fillStyle = "hsl(" + hue + ", 100%, 60%)";  
+  ctx.font = "bold 28px monospace";  
+  ctx.textAlign = "center";  
+  ctx.fillText(Level.name, CONFIG.CANVAS_W / 2, 50);  
+  ctx.textAlign = "left"; // put it back so the coin counter is unaffected  
+  ctx.globalAlpha = 1;  
+};  
+
 // a coin: a small yellow circle with a white ring  
 Coins.draw = function () {  
   var ctx = Draw.ctx;  
@@ -193,14 +213,15 @@ Draw.moon(); // the moon rises with your progress
   Trail.draw();  
   Draw.player();  
 
-
   ctx.restore();
+  
+Draw.titleCard(); // the level name, fixed on screen  
+  
   // the score, fixed on screen while the world scrolls  
-ctx.fillStyle = "#ffffff";  
-ctx.font = "20px monospace";  
-ctx.fillText("Coins: " + Coins.count, 10, 25);  
-
-};
+  ctx.fillStyle = "#ffffff";  
+  ctx.font = "20px monospace";  
+  ctx.fillText("Coins: " + Coins.count, 10, 25);  
+};  
 
 // Draw every grid square that is currently on screen.
 Draw.world = function () {

@@ -9,10 +9,11 @@
    the numbers).
    ===================================================================== */
 
-var Game = {
-  mode: "playing",   // "playing", "dead", or "won"
-  levelNumber: 0
-};
+var Game = {  
+  mode: "playing",   // "playing", "dead", or "won"  
+  levelNumber: 0,  
+  titleTimer: 0      // frames left to show the level's name  
+};  
 
 Game.startLevel = function (levelNumber) {
   Game.levelNumber = levelNumber;
@@ -21,6 +22,7 @@ Game.startLevel = function (levelNumber) {
   Trail.reset();
   Coins.reset();
   Player.reset();
+  Game.titleTimer = CONFIG.TITLE_FRAMES; // show the level name at the start  
   Game.mode = "playing";
   Game.showMessage("");
 };
@@ -43,6 +45,10 @@ Game.update = function () {
 
   // If we are not playing, nothing moves. We just wait for R.
   if (Game.mode !== "playing") { return; }
+
+    if (Game.titleTimer > 0) {  
+    Game.titleTimer = Game.titleTimer - 1; // count the title card down  
+  }  
 
   Player.update();
   Crumble.update();
