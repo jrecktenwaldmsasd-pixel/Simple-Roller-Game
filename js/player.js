@@ -14,8 +14,9 @@ var Player = {
   vy: 0,           // speed up and down
   onGround: false, // is the player standing on something right now?
   angle: 0,         // how far the circle has rolled, for drawing the dot
-  trail: [] // remembers recent positions for the contrail  
-
+  jumpWasDown: false,  // was the jump key held last frame?  
+  wallJumpUsed: false, // have we already launched off a wall since landing?  
+  wallJumpLock: 0,      // frames the launch force overrides steering  
 };
 
 // Put the player back at the level's S square.
@@ -26,22 +27,48 @@ Player.reset = function () {
   Player.vy = 0;
   Player.onGround = false;
   Player.angle = 0;
-  Player.trail = []; // clear the trail on restart  
+  Player.jumpWasDown = false;  
+  Player.wallJumpUsed = false;  
+  Player.wallJumpLock = 0;  
 };
 
 // Run one frame of player movement.  
 Player.update = function () {  
   var size = CONFIG.PLAYER_SIZE;  
   
-  // --- 1. decide how fast to go sideways ------------------------------  
-  Player.vx = 0;  
-  if (Input.left)  { Player.vx = -CONFIG.MOVE_SPEED; }  
-  if (Input.right) { Player.vx =  CONFIG.MOVE_SPEED; }  
+    // --- 1. decide how fast to go sideways ------------------------------  
+  if (Player.wallJumpLock > 0) {  
+    Player.wallJumpLock = Player.wallJumpLock - 1; // launch force holds  
+  } else {  
+    Player.vx = 0;  
+    if (Input.left)  { Player.vx = -CONFIG.MOVE_SPEED; }  
+    if (Input.right) { Player.vx =  CONFIG.MOVE_SPEED; }  
+  }  
+
+    // --- 2. jump: from the ground, or one launch off a wall -------------  
+  var jumpJustPressed = Input.jump && !Player.jumpWasDown;  
+  Player.jumpWasDown = Input.jump;  
   
-  // --- 2. jump, but only if we are standing on something --------------  
-  if (Input.jump && Player.onGround) {  
+  if (jumpJustPressed && Player.onGround) {  
     Player.vy = -CONFIG.JUMP_POWER;   // negative is UP  
     Player.onGround = false;  
+  
+  } else if (jumpJustPressed && !Player.onGround && !Player.wallJumpUsed) {  
+    var size = CONFIG.PLAYER_SIZE;  
+    var onLeftWall  = Collide.hitsSolid(Player.x - 1, Player.y, size, size);  
+    var onRightWall = Collide.hitsSolid(Player.x + size, Player.y, size, size);  
+  
+    if (onLeftWall) {  
+      Player.vx = CONFIG.WALL_JUMP_AWAY;   // launch right, away from wall  
+      Player.vy = -CONFIG.WALL_JUMP_POWER;  
+      Player.wallJumpUsed = true;  
+      Player.wallJumpLock = CONFIG.WALL_JUMP_LOCK_FRAMES;  
+    } else if (onRightWall) {  
+      Player.vx = -CONFIG.WALL_JUMP_AWAY;  // launch left, away from wall  
+      Player.vy = -CONFIG.WALL_JUMP_POWER;  
+      Player.wallJumpUsed = true;  
+      Player.wallJumpLock = CONFIG.WALL_JUMP_LOCK_FRAMES;  
+    }  
   }  
   
   // --- 3. gravity pulls down every single frame -----------------------  
@@ -68,7 +95,11 @@ Player.update = function () {
   
   for (var j = 0; j < Math.abs(Player.vy); j++) {  
     if (Collide.hitsSolid(Player.x, Player.y + stepY, size, size)) {  
-      if (stepY > 0) { Player.onGround = true; }  // we landed on something  
+
+          if (stepY > 0) {  // we landed on something  
+      Player.onGround = true;  
+      Player.wallJumpUsed = false; // landing gives the wall jump back  
+    }  
       Player.vy = 0;  
       break;  
     }  
@@ -77,18 +108,7 @@ Player.update = function () {
   
   // --- 6. keep the player inside the left edge of the world -----------  
   if (Player.x < 0) { Player.x = 0; }  
-  
-  Player.recordTrail();  
 };  
-
-// remember where we were, but only the last few spots  
-Player.recordTrail = function () {  
-  Player.trail.push({ x: Player.x, y: Player.y });  
-  if (Player.trail.length > CONFIG.TRAIL_LENGTH) {  
-    Player.trail.shift(); // forget the oldest position  
-  }  
-};  
-
 
 Player.isDead = function () {
   var size = CONFIG.PLAYER_SIZE;

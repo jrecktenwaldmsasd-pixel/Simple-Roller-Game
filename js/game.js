@@ -18,6 +18,7 @@ Game.startLevel = function (levelNumber) {
   Game.levelNumber = levelNumber;
   Level.build(levelNumber);
   Crumble.reset();
+  Trail.reset();
   Coins.reset();
   Player.reset();
   Game.mode = "playing";
@@ -42,6 +43,7 @@ Game.update = function () {
 
   Player.update();
   Crumble.update();
+  Trail.update();
   Coins.update();
 
   if (Player.isDead()) {

@@ -38,6 +38,10 @@ var CONFIG = {
 CRUMBLE_SHAKE_FRAMES: 10, // about one second before it falls  
 CRUMBLE_RESPAWN_FRAMES: 180, // about three seconds before it returns  
 
-TRAIL_LENGTH: 50 // how many past positions the contrail remembers  
+TRAIL_LENGTH: 50, // how many past positions the contrail remembers  
+
+  WALL_JUMP_AWAY: 5,          // sideways push off a wall  
+  WALL_JUMP_POWER: 15,        // upward push off a wall  
+  WALL_JUMP_LOCK_FRAMES: 12   // frames the launch overrides your steering  
 
 };

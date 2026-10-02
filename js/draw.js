@@ -186,11 +186,13 @@ Draw.moon(); // the moon rises with your progress
   ctx.save();
   ctx.translate(-Draw.cameraX, 0);
 
-  Draw.world();
-  Coins.draw();
-  Crumble.draw();
-  Draw.lamps();
-  Draw.player();
+  Draw.world();  
+  Coins.draw();  
+  Crumble.draw();  
+  Draw.lamps();  
+  Trail.draw();  
+  Draw.player();  
+
 
   ctx.restore();
   // the score, fixed on screen while the world scrolls  
@@ -268,18 +270,7 @@ Draw.finish = function (x, y, size) {
 Draw.player = function () {
   var ctx = Draw.ctx;
 
-  // draw the contrail first so it sits behind the player  
-ctx.fillStyle = "#ffffff";  
-for (var i = 0; i < Player.trail.length; i++) {  
-  var spot = Player.trail[i];  
-  var fade = i / Player.trail.length; // older spots are smaller  
-  ctx.globalAlpha = fade * 0.4; // see-through so it looks like a trail  
-  ctx.beginPath();  
-  ctx.arc(spot.x + CONFIG.PLAYER_SIZE / 2,  
-    spot.y + CONFIG.PLAYER_SIZE / 2,  
-    CONFIG.PLAYER_RADIUS * fade * 0.6, 0, Math.PI * 2);  
-  ctx.fill();  
-}  
+ 
 ctx.globalAlpha = 1; // back to full strength for the player  
 
 
