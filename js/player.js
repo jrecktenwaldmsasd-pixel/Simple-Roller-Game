@@ -97,9 +97,14 @@ Player.update = function () {
     if (Collide.hitsSolid(Player.x, Player.y + stepY, size, size)) {  
 
           if (stepY > 0) {  // we landed on something  
+      if (Player.vy > 8) { // only dust on hard landings  
+        Effects.landDust(Player.x, Player.y);  
+      }  
       Player.onGround = true;  
       Player.wallJumpUsed = false; // landing gives the wall jump back  
     }  
+
+          
       Player.vy = 0;  
       break;  
     }  

@@ -21,6 +21,7 @@ Game.startLevel = function (levelNumber) {
   Crumble.reset();
   Trail.reset();
   Coins.reset();
+  Effects.reset();
   Player.reset();
   Game.titleTimer = CONFIG.TITLE_FRAMES; // show the level name at the start  
   Game.mode = "playing";
@@ -43,8 +44,14 @@ Game.update = function () {
     return;  
   }  
 
-  // If we are not playing, nothing moves. We just wait for R.
-  if (Game.mode !== "playing") { return; }
+  // If we are not playing, nothing moves. We just wait for R.  
+  if (Game.mode !== "playing") {  
+    Effects.update(); // particles keep flying even while dead  
+    return;  
+  }  
+  
+  Effects.update();  
+
 
     if (Game.titleTimer > 0) {  
     Game.titleTimer = Game.titleTimer - 1; // count the title card down  
@@ -55,9 +62,11 @@ Game.update = function () {
   Trail.update();
   Coins.update();  
   Coins.popsUpdate();  
+  
 
 
   if (Player.isDead()) {
+    Effects.deathBurst(Player.x, Player.y); // shatter where we died  
     Game.mode = "dead";
     Game.showMessage("You hit something. Press R to try again.");
     return;

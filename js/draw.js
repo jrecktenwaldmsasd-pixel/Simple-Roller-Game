@@ -210,6 +210,7 @@ Draw.moon(); // the moon rises with your progress
   Crumble.draw();  
   Draw.lamps();  
   Trail.draw();  
+  Effects.draw();
   Draw.player();  
 
   ctx.restore();
